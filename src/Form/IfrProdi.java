@@ -118,7 +118,7 @@ public class IfrProdi extends javax.swing.JInternalFrame {
             state.executeUpdate(sqlinsert);
             JOptionPane.showMessageDialog(this, "Data berhasil disimpan", "Informasi", 
                     JOptionPane.INFORMATION_MESSAGE);
-            clearForm(); disableInput(); showDataProdi();
+            aksiTambah();clearForm(); disableInput(); showDataProdi();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Error method aksiSimpan() : "+ex);
         }
@@ -136,10 +136,26 @@ public class IfrProdi extends javax.swing.JInternalFrame {
                 stat.executeUpdate(sqldelete);
                 JOptionPane.showMessageDialog(this, "Data berhasil dihapus", "Informasi", 
                         JOptionPane.INFORMATION_MESSAGE);
-                showDataProdi(); clearForm(); disableInput();
+                aksiTambah();showDataProdi(); clearForm(); disableInput();
             }catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Error method aksiHapus() : "+ex);
             }
+        }
+    }
+    
+    private void aksiTambah(){
+        if(btnTambah.getText().equals("Tambah")){
+            btnTambah.setText("Batal");
+            enableInput();
+            cmbJurusan.requestFocus(true);
+            btnTambah.setIcon(new javax.swing.ImageIcon(getClass().
+                    getResource("/Image/btn_delete.png")));
+        }else if(btnTambah.getText().equals("Batal")){
+            btnTambah.setText("Tambah");
+            clearForm();
+            disableInput();
+            btnTambah.setIcon(new javax.swing.ImageIcon(getClass().
+                    getResource("/Image/trans-add.png")));
         }
     }
     
@@ -152,7 +168,7 @@ public class IfrProdi extends javax.swing.JInternalFrame {
         if(framesize.width > screensize.width){
             framesize.width = screensize.width;
         }
-        this.setLocation(screensize.width - framesize.width/2, 
+        this.setLocation((screensize.width - framesize.width)/2, 
                 (screensize.height - framesize.height)/2);
     }
     
@@ -405,8 +421,7 @@ public class IfrProdi extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtKdProdiActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        enableInput();
-        cmbJurusan.requestFocus(true);
+       aksiTambah();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
@@ -467,4 +482,5 @@ public class IfrProdi extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtKdProdi;
     private javax.swing.JTextField txtProdi;
     // End of variables declaration//GEN-END:variables
+
 }

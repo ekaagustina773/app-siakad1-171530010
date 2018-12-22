@@ -6,7 +6,7 @@ public class KoneksiDB {
     public Connection getConnection() throws SQLException{
         Connection cnn;
         try{
-            String server = "jdbc:mysql://localhost/dbsiakad_171530030";
+            String server = "jdbc:mysql://localhost/dbsiakad_171530010";
             String drever = "com.mysql.jdbc.Driver";
             Class.forName(drever);
             cnn = DriverManager.getConnection(server, "root", "");

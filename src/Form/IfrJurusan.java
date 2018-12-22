@@ -111,7 +111,7 @@ public class IfrJurusan extends javax.swing.JInternalFrame {
             stat.executeUpdate(sqlinsert);
             JOptionPane.showMessageDialog(this, "Data berhasil disimpan", "Informasi", 
                     JOptionPane.INFORMATION_MESSAGE);
-            showDataJurusan(); clearForm(); disableInput();
+            aksiTambah();showDataJurusan(); clearForm(); disableInput();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Error method aksiSimpan() : "+ex);
         }
@@ -129,10 +129,26 @@ public class IfrJurusan extends javax.swing.JInternalFrame {
                 stat.executeUpdate(sqldelete);
                 JOptionPane.showMessageDialog(this, "Data berhasil dihapus", "Informasi", 
                         JOptionPane.INFORMATION_MESSAGE);
-                showDataJurusan(); clearForm(); disableInput();
+                aksiTambah();showDataJurusan(); clearForm(); disableInput();
             }catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Error method aksiHapus() : "+ex);
             }
+        }
+    }
+    
+    private void aksiTambah(){
+        if(btnTambah.getText().equals("Tambah")){
+            btnTambah.setText("Batal");
+            enableInput();
+            txtKdJur.requestFocus(true);
+            btnTambah.setIcon(new javax.swing.ImageIcon(getClass().
+                    getResource("/Image/btn_delete.png")));
+        }else if(btnTambah.getText().equals("Batal")){
+            btnTambah.setText("Tambah");
+            clearForm();
+            disableInput();
+            btnTambah.setIcon(new javax.swing.ImageIcon(getClass().
+                    getResource("/Image/trans-add.png")));
         }
     }
     
@@ -145,7 +161,7 @@ public class IfrJurusan extends javax.swing.JInternalFrame {
         if(framesize.width > screensize.width){
             framesize.width = screensize.width;
         }
-        this.setLocation(screensize.width - framesize.width/2, 
+        this.setLocation((screensize.width - framesize.width)/2, 
                 (screensize.height - framesize.height)/2);
     }
 
