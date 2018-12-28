@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import static net.sf.jasperreports.engine.util.JRLoader.getResource;
 
 public class FrMenu extends javax.swing.JFrame {
     
@@ -120,7 +121,8 @@ public class FrMenu extends javax.swing.JFrame {
     void userAkademik(){
         menuSistem(true);
         mnUser.setText("Ubah Password");
-        menuMaster(true);
+        mnUser.setIcon(new javax.swing.ImageIcon(getClass().
+               getResource("/Image/key.png")));
         menuAkademik(true);
         menuMahasiswa(false);
         menuPegawai(false);
@@ -130,6 +132,8 @@ public class FrMenu extends javax.swing.JFrame {
     void userKemahasiswaan(){
         menuSistem(true);
         mnUser.setText("Ubah Password");
+        mnUser.setIcon(new javax.swing.ImageIcon(getClass().
+               getResource("/Image/key.png")));
         menuMaster(false);
         menuAkademik(false);
         menuMahasiswa(true);
@@ -140,7 +144,6 @@ public class FrMenu extends javax.swing.JFrame {
     void userKepegawaian(){
         menuSistem(true);
         mnUser.setText("Ubah Password");
-        menuMaster(false);
         menuAkademik(false);
         menuMahasiswa(false);
         menuPegawai(true);

@@ -15,8 +15,8 @@ public class IfrTahunAngkatan extends javax.swing.JInternalFrame {
 
     KoneksiDB getCnn = new KoneksiDB();
     Connection _Cnn;
-    String sqlselect, sqlinsert, sqldelete;
-    private DefaultTableModel tbthangkatan;
+    String sqlselect, sqlinsert, sqldelete, konfirmasi;
+    private DefaultTableModel tblthangkatan;
     String vid_ta, vtahun_angkatan;
     
     public IfrTahunAngkatan() {
@@ -50,7 +50,7 @@ public class IfrTahunAngkatan extends javax.swing.JInternalFrame {
     
     private void setTabel(){
         String[] kolom1 = {"Kode TA", "Tahun Angkatan"}; 
-        tbthangkatan = new DefaultTableModel(null, kolom1){
+        tblthangkatan = new DefaultTableModel(null, kolom1){
             Class[] types = new Class[]{
                 java.lang.String.class,
                 java.lang.String.class
@@ -60,19 +60,19 @@ public class IfrTahunAngkatan extends javax.swing.JInternalFrame {
             }
             
             public boolean isCellEditable(int row, int co1){
-                int cola = tbthangkatan.getColumnCount();
+                int cola = tblthangkatan.getColumnCount();
                 return (co1 < cola) ? false : true;
             }
         };
-        tbDataThAngkatan.setModel(tbthangkatan);
+        tbDataThAngkatan.setModel(tblthangkatan);
         tbDataThAngkatan.getColumnModel().getColumn(0).setPreferredWidth(75);
         tbDataThAngkatan.getColumnModel().getColumn(1).setPreferredWidth(250);
     }
     
     private void clearTabel(){
-        int row = tbthangkatan.getRowCount();
+        int row = tblthangkatan.getRowCount();
         for(int i=0; i < row; i++){
-            tbthangkatan.removeRow(0);
+            tblthangkatan.removeRow(0);
         }
     }
     
@@ -88,7 +88,7 @@ public class IfrTahunAngkatan extends javax.swing.JInternalFrame {
                 vid_ta = res.getString(1);
                 vtahun_angkatan = res.getString(2);
                 Object[]data = {vid_ta, vtahun_angkatan};
-                tbthangkatan.addRow(data);
+                tblthangkatan.addRow(data);
             }
             lbRecord.setText("Record : "+tbDataThAngkatan.getRowCount());
         }catch(SQLException ex){
@@ -100,17 +100,19 @@ public class IfrTahunAngkatan extends javax.swing.JInternalFrame {
         vtahun_angkatan = txtThAngkatan.getText();
         if(btnSimpan.getText().equals("Simpan")){
             sqlinsert = "insert into tbthangkatan values " 
-                    + "('"+vid_ta+"', '"+vtahun_angkatan+"') ";
+                    + " ('"+vid_ta+"', '"+vtahun_angkatan+"') ";
+            konfirmasi = "Data tahun angkatan berhasil disimpan ";
         }else{
             sqlinsert = "update tbthangkatan set tahun_Angkatan='"+vtahun_angkatan+"'" 
                     + " where id_ta='"+vid_ta+"' ";
+            konfirmasi = "Data tahun angkatan berhasil diubah";
         }
         try{
             _Cnn = null;
             _Cnn = getCnn.getConnection();
             Statement state = _Cnn.createStatement();
             state.executeUpdate(sqlinsert);
-            JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
+            JOptionPane.showMessageDialog(this,konfirmasi);
             clearForm(); disableForm(); showTabel();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(this, "Error method aksiSimpan() : "+ex);
@@ -120,7 +122,7 @@ public class IfrTahunAngkatan extends javax.swing.JInternalFrame {
     private void aksiHapus(){
         int jawab = JOptionPane.showConfirmDialog(this, 
                 "Apakah anda yakin akan menghapus data ini ? ID. TA : "+vid_ta, 
-                "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                "Konfirmasi",JOptionPane.YES_NO_OPTION);
         if(jawab==JOptionPane.YES_OPTION){
             try{
                 _Cnn = null;
